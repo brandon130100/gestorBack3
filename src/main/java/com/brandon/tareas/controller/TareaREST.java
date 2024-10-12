@@ -57,13 +57,13 @@ public class TareaREST {
         try{
             Tarea tareaExistente = tareaService.findById(id).orElseThrow(() -> new RuntimeException("Tarea no encontrada con el id: " + id));
 
-            tareaExistente.setTitulo(tarea.getTitulo());
-            tareaExistente.setDescripcion(tarea.getDescripcion());
-            tareaExistente.setFechaCreacion(LocalDate.now());
-            tareaExistente.setFechaLimite(tarea.getFechaLimite());
+            tareaExistente.setNombre(tarea.getNombre());
             tareaExistente.setPrioridad(tarea.getPrioridad());
+            tareaExistente.setResponsable(tarea.getResponsable());
             tareaExistente.setEstado(tarea.getEstado());
-            tareaExistente.setEtiqueta(tarea.getEtiqueta());
+            tareaExistente.setFechaRegistro(LocalDate.now());
+            tareaExistente.setFechaCierre(tarea.getFechaCierre());
+            tareaExistente.setProyecto(tarea.getProyecto());
 
             Tarea tareaActual = tareaService.save(tareaExistente);
             return ResponseEntity.ok(tareaActual);

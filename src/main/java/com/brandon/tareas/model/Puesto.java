@@ -7,18 +7,18 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table (name = "prioridades")
-public class Prioridad {
+@Table (name = "puestos")
+public class Puesto {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;
+
     private String nombre;
 
-    public Prioridad(){
-
+    public Puesto() {
     }
 
-    public Prioridad(String nombre) {
+    public Puesto(String nombre) {
         this.nombre = nombre;
     }
 
@@ -37,4 +37,6 @@ public class Prioridad {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
+
+    
 }

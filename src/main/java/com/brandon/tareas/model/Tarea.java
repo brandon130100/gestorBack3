@@ -12,110 +12,132 @@ import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 
 @Entity
-@Table (name = "tarea")
+@Table (name = "tareas")
 public class Tarea {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String titulo;
-    private String descripcion;
-    private LocalDate fechaCreacion;
-    private LocalDate fechaLimite;
+
+    private String nombre;
 
     @ManyToOne
     @JoinColumn(name = "id_prioridad")
     private Prioridad prioridad;
 
     @ManyToOne
+    @JoinColumn(name= "id_responsable")
+    Responsable responsable;
+
+    @ManyToOne
     @JoinColumn(name = "id_estado")
     private Estado estado;
 
+    private LocalDate fechaRegistro;
+    private LocalDate fechaCierre;
+
     @ManyToOne
-    @JoinColumn(name = "id_etiqueta")
-    private Etiqueta etiqueta;
+    @JoinColumn(name= "id_proyecto")
+    Proyecto proyecto;
+
 
     @PrePersist
     public void prePersist() {
-        this.fechaCreacion = LocalDate.now();
+        this.fechaRegistro = LocalDate.now();
     }
 
-    public Tarea(String titulo, String descripcion, LocalDate fechaLimite, Prioridad prioridad,
-            Estado estado, Etiqueta etiqueta) {
-        this.titulo = titulo;
-        this.descripcion = descripcion;
-        this.fechaCreacion = LocalDate.now();
-        this.fechaLimite = fechaLimite;
-        this.prioridad = prioridad;
-        this.estado = estado;
-        this.etiqueta = etiqueta;
-    }
 
     public Tarea() {
     }
+
+
+    public Tarea(String nombre, Prioridad prioridad, Responsable responsable, Estado estado, LocalDate fechaRegistro,
+            LocalDate fechaCierre, Proyecto proyecto) {
+        this.nombre = nombre;
+        this.prioridad = prioridad;
+        this.responsable = responsable;
+        this.estado = estado;
+        this.fechaRegistro = LocalDate.now();
+        this.fechaCierre = fechaCierre;
+        this.proyecto = proyecto;
+    }
+
 
     public Long getId() {
         return id;
     }
 
+
     public void setId(Long id) {
         this.id = id;
     }
 
-    public String getTitulo() {
-        return titulo;
+
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setTitulo(String titulo) {
-        this.titulo = titulo;
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
-
-    public LocalDate getFechaCreacion() {
-        return fechaCreacion;
-    }
-
-    public void setFechaCreacion(LocalDate fechaCreacion) {
-        this.fechaCreacion = fechaCreacion;
-    }
-
-    public LocalDate getFechaLimite() {
-        return fechaLimite;
-    }
-
-    public void setFechaLimite(LocalDate fechaLimite) {
-        this.fechaLimite = fechaLimite;
-    }
 
     public Prioridad getPrioridad() {
         return prioridad;
     }
 
+
     public void setPrioridad(Prioridad prioridad) {
         this.prioridad = prioridad;
     }
+
+
+    public Responsable getResponsable() {
+        return responsable;
+    }
+
+
+    public void setResponsable(Responsable responsable) {
+        this.responsable = responsable;
+    }
+
 
     public Estado getEstado() {
         return estado;
     }
 
+
     public void setEstado(Estado estado) {
         this.estado = estado;
     }
 
-    public Etiqueta getEtiqueta() {
-        return etiqueta;
+
+    public LocalDate getFechaRegistro() {
+        return fechaRegistro;
     }
 
-    public void setEtiqueta(Etiqueta etiqueta) {
-        this.etiqueta = etiqueta;
+
+    public void setFechaRegistro(LocalDate fechaRegistro) {
+        this.fechaRegistro = fechaRegistro;
     }
 
-    
+
+    public LocalDate getFechaCierre() {
+        return fechaCierre;
+    }
+
+
+    public void setFechaCierre(LocalDate fechacierre) {
+        this.fechaCierre = fechacierre;
+    }
+
+
+    public Proyecto getProyecto() {
+        return proyecto;
+    }
+
+
+    public void setProyecto(Proyecto proyecto) {
+        this.proyecto = proyecto;
+    } 
 }
