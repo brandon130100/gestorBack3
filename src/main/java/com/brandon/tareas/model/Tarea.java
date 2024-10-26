@@ -117,8 +117,8 @@ public class Tarea {
     }
 
 
-    public void setFechaRegistro(LocalDate fechaRegistro) {
-        this.fechaRegistro = fechaRegistro;
+    public void setFechaRegistro() {
+        this.fechaRegistro = LocalDate.now();
     }
 
 

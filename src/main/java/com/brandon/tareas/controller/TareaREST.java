@@ -1,7 +1,6 @@
 package com.brandon.tareas.controller;
 
 import java.net.URI;
-import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,7 +60,6 @@ public class TareaREST {
             tareaExistente.setPrioridad(tarea.getPrioridad());
             tareaExistente.setResponsable(tarea.getResponsable());
             tareaExistente.setEstado(tarea.getEstado());
-            tareaExistente.setFechaRegistro(LocalDate.now());
             tareaExistente.setFechaCierre(tarea.getFechaCierre());
             tareaExistente.setProyecto(tarea.getProyecto());
 
