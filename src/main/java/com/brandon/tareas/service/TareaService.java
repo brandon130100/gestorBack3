@@ -196,6 +196,11 @@ public class TareaService implements TareaRepository {
         return Optional.empty();
     }
 
+    @Override
+    public List<Tarea> findByPrioridadId(Long prioridadId) {
+        return tareaRepository.findByPrioridadId(prioridadId); // Usa el nuevo método del repositorio
+    }
+
     
 
     

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.brandon.tareas.model.Tarea;
@@ -26,9 +27,22 @@ public class TareaREST {
     private TareaService tareaService;
 
     @GetMapping
-    private ResponseEntity<List<Tarea>> getAllTareas(){
-        return ResponseEntity.ok(tareaService.findAll());
+    public ResponseEntity<List<Tarea>> filtrarTareas(@RequestParam(required = false) Long prioridadId) {
+        List<Tarea> tareas;
+
+        if (prioridadId != null) {
+            tareas = tareaService.findByPrioridadId(prioridadId); // Llama al método con el ID
+        } else {
+            tareas = tareaService.findAll(); // Devuelve todas las tareas si no hay filtro
+        }
+
+        return ResponseEntity.ok(tareas); // Retorna las tareas envueltas en un ResponseEntity
     }
+
+    // @GetMapping
+    // private ResponseEntity<List<Tarea>> getAllTareas(){
+    //     return ResponseEntity.ok(tareaService.findAll());
+    // }
 
     @PostMapping
     private ResponseEntity<Tarea> saveTarea(@RequestBody Tarea tarea){
