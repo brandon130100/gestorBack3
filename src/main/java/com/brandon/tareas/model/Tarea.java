@@ -26,7 +26,7 @@ public class Tarea {
 
     @ManyToOne
     @JoinColumn(name= "id_responsable")
-    Responsable responsable;
+    private Responsable responsable;
 
     @ManyToOne
     @JoinColumn(name = "id_estado")
@@ -44,7 +44,6 @@ public class Tarea {
     public void prePersist() {
         this.fechaRegistro = LocalDate.now();
     }
-
 
     public Tarea() {
     }

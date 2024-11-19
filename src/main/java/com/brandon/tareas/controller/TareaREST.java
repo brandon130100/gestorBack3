@@ -1,6 +1,7 @@
 package com.brandon.tareas.controller;
 
 import java.net.URI;
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,18 +27,40 @@ public class TareaREST {
     @Autowired
     private TareaService tareaService;
 
+
     @GetMapping
-    public ResponseEntity<List<Tarea>> filtrarTareas(@RequestParam(required = false) Long prioridadId) {
-        List<Tarea> tareas;
-
-        if (prioridadId != null) {
-            tareas = tareaService.findByPrioridadId(prioridadId); // Llama al método con el ID
-        } else {
-            tareas = tareaService.findAll(); // Devuelve todas las tareas si no hay filtro
-        }
-
-        return ResponseEntity.ok(tareas); // Retorna las tareas envueltas en un ResponseEntity
+    public ResponseEntity<List<Tarea>> filtrarTareas(
+            @RequestParam(required = false) Long prioridadId,
+            @RequestParam(required = false) Long responsableId,
+            @RequestParam(required = false) Long estadoId,
+            @RequestParam(required = false) Long proyectoId,
+            @RequestParam(required = false) LocalDate fechaCierre) {
+        
+        List<Tarea> tareasFiltradas = tareaService.filtrarTareas(prioridadId, responsableId, estadoId, proyectoId, fechaCierre);
+        return ResponseEntity.ok(tareasFiltradas);
     }
+
+    // @GetMapping
+    // public ResponseEntity<List<Tarea>> filtrarTareas(
+    //         @RequestParam(required = false) Long prioridadId,
+    //         @RequestParam(required = false) Long responsableId) {
+
+    //     List<Tarea> tareas = tareaService.filtrarTareas(prioridadId, responsableId);
+    //     return ResponseEntity.ok(tareas);
+    // }
+
+    // @GetMapping
+    // public ResponseEntity<List<Tarea>> filtrarTareas(@RequestParam(required = false) Long prioridadId) {
+    //     List<Tarea> tareas;
+
+    //     if (prioridadId != null) {
+    //         tareas = tareaService.findByPrioridadId(prioridadId); // Llama al método con el ID
+    //     } else {
+    //         tareas = tareaService.findAll(); // Devuelve todas las tareas si no hay filtro
+    //     }
+
+    //     return ResponseEntity.ok(tareas); // Retorna las tareas envueltas en un ResponseEntity
+    // }
 
     // @GetMapping
     // private ResponseEntity<List<Tarea>> getAllTareas(){
