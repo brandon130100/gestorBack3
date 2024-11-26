@@ -1,5 +1,9 @@
 package com.brandon.tareas.model;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -22,10 +26,12 @@ public class Responsable {
 
     private String celular;
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Departamento departamento;
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Puesto puesto;
 
     public Responsable() {
@@ -96,6 +102,5 @@ public class Responsable {
     public void setPuesto(Puesto puesto) {
         this.puesto = puesto;
     }
-
-    
+   
 }

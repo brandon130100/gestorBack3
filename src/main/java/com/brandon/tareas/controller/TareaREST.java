@@ -34,9 +34,11 @@ public class TareaREST {
             @RequestParam(required = false) Long responsableId,
             @RequestParam(required = false) Long estadoId,
             @RequestParam(required = false) Long proyectoId,
-            @RequestParam(required = false) LocalDate fechaCierre) {
+            @RequestParam(required = false) LocalDate fechaCierre,
+            @RequestParam(required = false) LocalDate fechaRegistro,
+            @RequestParam(required = false) String ordenamiento) {
         
-        List<Tarea> tareasFiltradas = tareaService.filtrarTareas(prioridadId, responsableId, estadoId, proyectoId, fechaCierre);
+        List<Tarea> tareasFiltradas = tareaService.filtrarTareas(prioridadId, responsableId, estadoId, proyectoId, fechaCierre, fechaRegistro, ordenamiento);
         return ResponseEntity.ok(tareasFiltradas);
     }
 

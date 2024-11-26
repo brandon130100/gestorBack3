@@ -255,12 +255,12 @@ public class TareaService implements TareaRepository {
     // }
 
     // nuevo metodo
-    public List<Tarea> filtrarTareas(Long prioridadId, Long responsableId, Long estadoId, Long proyectoId, LocalDate fechaCierre) {
-        return tareaRepository.findAll(getSpecifications(prioridadId, responsableId, estadoId, proyectoId, fechaCierre));
+    public List<Tarea> filtrarTareas(Long prioridadId, Long responsableId, Long estadoId, Long proyectoId, LocalDate fechaCierre, LocalDate fechaRegistro, String ordenamiento) {
+        return tareaRepository.findAll(getSpecifications(prioridadId, responsableId, estadoId, proyectoId, fechaCierre, fechaRegistro, ordenamiento));
     }
 
     //nuevo metodo
-    private Specification<Tarea> getSpecifications(Long prioridadId, Long responsableId, Long estadoId, Long proyectoId, LocalDate fechaCierre) {
+    private Specification<Tarea> getSpecifications(Long prioridadId, Long responsableId, Long estadoId, Long proyectoId, LocalDate fechaCierre, LocalDate fechaRegistro, String ordenamiento) {
         return (root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
 
@@ -278,6 +278,32 @@ public class TareaService implements TareaRepository {
             }
             if (fechaCierre != null) {
                 predicates.add(criteriaBuilder.equal(root.get("fechaCierre"), fechaCierre));
+            }
+            if (fechaRegistro != null) {
+                predicates.add(criteriaBuilder.equal(root.get("fechaRegistro"), fechaRegistro));
+            }
+
+            if (ordenamiento != null){
+                switch (ordenamiento){
+                    case "fechaCierre":
+                        query.orderBy(criteriaBuilder.asc(root.get("fechaCierre")));
+                        break;
+                    case "prioridad":
+                        query.orderBy(criteriaBuilder.asc(root.get("prioridad")));
+                        break;
+                    case "responsable":
+                        query.orderBy(criteriaBuilder.asc(root.get("responsable")));
+                        break;
+                    case "estado":
+                        query.orderBy(criteriaBuilder.asc(root.get("estado")));
+                        break;
+                    case "proyecto":
+                        query.orderBy(criteriaBuilder.asc(root.get("proyecto")));
+                        break;
+                    default:
+                        query.orderBy(criteriaBuilder.asc(root.get("fechaRegistro")));
+                        break;
+                }
             }
 
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
