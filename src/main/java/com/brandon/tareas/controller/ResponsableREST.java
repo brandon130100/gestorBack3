@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.brandon.tareas.model.Responsable;
@@ -26,8 +27,13 @@ public class ResponsableREST {
     private ResponsableService responsableService;
 
     @GetMapping
-    private ResponseEntity<List<Responsable>> getAllResponsables(){
-        return ResponseEntity.ok(responsableService.findAll());
+    public ResponseEntity<List<Responsable>> filtrarResponsables(
+            @RequestParam(required = false) Long departamentoId,
+            @RequestParam(required = false) Long puestoId,
+            @RequestParam(required = false) String ordenamiento){
+
+        List<Responsable> responsablesFiltrados = responsableService.filtrarResponsable(departamentoId, puestoId, ordenamiento);
+        return ResponseEntity.ok(responsablesFiltrados);
     }
 
     @PostMapping

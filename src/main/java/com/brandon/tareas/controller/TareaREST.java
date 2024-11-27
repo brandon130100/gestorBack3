@@ -42,33 +42,6 @@ public class TareaREST {
         return ResponseEntity.ok(tareasFiltradas);
     }
 
-    // @GetMapping
-    // public ResponseEntity<List<Tarea>> filtrarTareas(
-    //         @RequestParam(required = false) Long prioridadId,
-    //         @RequestParam(required = false) Long responsableId) {
-
-    //     List<Tarea> tareas = tareaService.filtrarTareas(prioridadId, responsableId);
-    //     return ResponseEntity.ok(tareas);
-    // }
-
-    // @GetMapping
-    // public ResponseEntity<List<Tarea>> filtrarTareas(@RequestParam(required = false) Long prioridadId) {
-    //     List<Tarea> tareas;
-
-    //     if (prioridadId != null) {
-    //         tareas = tareaService.findByPrioridadId(prioridadId); // Llama al método con el ID
-    //     } else {
-    //         tareas = tareaService.findAll(); // Devuelve todas las tareas si no hay filtro
-    //     }
-
-    //     return ResponseEntity.ok(tareas); // Retorna las tareas envueltas en un ResponseEntity
-    // }
-
-    // @GetMapping
-    // private ResponseEntity<List<Tarea>> getAllTareas(){
-    //     return ResponseEntity.ok(tareaService.findAll());
-    // }
-
     @PostMapping
     private ResponseEntity<Tarea> saveTarea(@RequestBody Tarea tarea){
         try{

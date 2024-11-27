@@ -1,5 +1,6 @@
 package com.brandon.tareas.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
@@ -9,11 +10,14 @@ import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.repository.query.FluentQuery.FetchableFluentQuery;
 import org.springframework.stereotype.Service;
 
 import com.brandon.tareas.model.Responsable;
 import com.brandon.tareas.repository.ResponsableRepository;
+
+import jakarta.persistence.criteria.Predicate;
 
 @Service
 public class ResponsableService implements ResponsableRepository {
@@ -197,5 +201,85 @@ public class ResponsableService implements ResponsableRepository {
         return Optional.empty();
     }
 
+    @Override
+    public Optional<Responsable> findOne(Specification<Responsable> spec) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'findOne'");
+    }
+
+    @Override
+    public List<Responsable> findAll(Specification<Responsable> spec) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'findAll'");
+    }
+
+    @Override
+    public Page<Responsable> findAll(Specification<Responsable> spec, Pageable pageable) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'findAll'");
+    }
+
+    @Override
+    public List<Responsable> findAll(Specification<Responsable> spec, Sort sort) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'findAll'");
+    }
+
+    @Override
+    public long count(Specification<Responsable> spec) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'count'");
+    }
+
+    @Override
+    public boolean exists(Specification<Responsable> spec) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'exists'");
+    }
+
+    @Override
+    public long delete(Specification<Responsable> spec) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'delete'");
+    }
+
+    @Override
+    public <S extends Responsable, R> R findBy(Specification<Responsable> spec,
+            Function<FetchableFluentQuery<S>, R> queryFunction) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'findBy'");
+    }
+
+    public List<Responsable> filtrarResponsable(Long departamentoId, Long puestoId, String ordenamiento){
+        return responsableRepository.findAll(getSpecifications(departamentoId, puestoId, ordenamiento));
+    }
+
+    private Specification<Responsable> getSpecifications(Long departamentoId, Long puestoId, String ordenamiento) {
+        return (root, query, criteriaBuilder) -> {
+            List<Predicate> predicates = new ArrayList<>();
+
+            if (departamentoId != null) {
+                predicates.add(criteriaBuilder.equal(root.get("departamento").get("id"), departamentoId));
+            }
+            if (puestoId != null) {
+                predicates.add(criteriaBuilder.equal(root.get("puesto").get("id"), puestoId));
+            }
+
+            if (ordenamiento != null){
+                switch (ordenamiento){
+                    case "departamento":
+                        query.orderBy(criteriaBuilder.asc(root.get("departamento")));
+                        break;
+                    case "puesto":
+                        query.orderBy(criteriaBuilder.asc(root.get("puesto")));
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
+        };
+    }
     
 }

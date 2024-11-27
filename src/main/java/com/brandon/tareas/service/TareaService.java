@@ -202,64 +202,11 @@ public class TareaService implements TareaRepository {
         return Optional.empty();
     }
 
-    @Override
-    public List<Tarea> findByPrioridadId(Long prioridadId) {
-        return tareaRepository.findByPrioridadId(prioridadId); // Usa el nuevo método del repositorio
-    }
-
-    @Override
-    public List<Tarea> findByResponsableId(Long responsableId) {
-        return tareaRepository.findByResponsableId(responsableId);
-    }
-
-    @Override
-    public List<Tarea> findByPrioridadIdAndResponsableId(Long prioridadId, Long responsableId) {
-        return tareaRepository.findByPrioridadIdAndResponsableId(prioridadId, responsableId);
-    }
-
     
-    @Override
-    public List<Tarea> findByEstadoId(Long estadoId) {
-        return tareaRepository.findByEstadoId(estadoId);
-    }
-
-    @Override
-    public List<Tarea> findByPrioridadIdAndEstadoId(Long prioridadId, Long estadoId) {
-        return tareaRepository.findByPrioridadIdAndEstadoId(prioridadId, estadoId);
-    }
-
-    @Override
-    public List<Tarea> findByResponsableIdAndEstadoId(Long responsableId, Long estadoId) {
-        return tareaRepository.findByResponsableIdAndEstadoId(responsableId, estadoId);
-    }
-
-    @Override
-    public List<Tarea> findByPrioridadIdAndResponsableIdAndEstadoId(Long prioridadId, Long responsableId,
-            Long estadoId) {
-        return tareaRepository.findByPrioridadIdAndResponsableIdAndEstadoId(prioridadId, responsableId, estadoId);
-    }
-
-    // public List<Tarea> filtrarTareas(Long prioridadId, Long responsableId, Long estadoId) {
-    //     if(prioridadId != null && responsableId != null && estadoId != null){
-    //         return tareaRepository.findByPrioridadIdAndResponsableIdAndEstadoId(prioridadId, responsableId, estadoId);
-    //     }
-    //     else if (prioridadId != null && responsableId != null) {
-    //         return tareaRepository.findByPrioridadIdAndResponsableId(prioridadId, responsableId);
-    //     } else if (prioridadId != null) {
-    //         return tareaRepository.findByPrioridadId(prioridadId);
-    //     } else if (responsableId != null) {
-    //         return tareaRepository.findByResponsableId(responsableId);
-    //     } else {
-    //         return tareaRepository.findAll();
-    //     }
-    // }
-
-    // nuevo metodo
     public List<Tarea> filtrarTareas(Long prioridadId, Long responsableId, Long estadoId, Long proyectoId, LocalDate fechaCierre, LocalDate fechaRegistro, String ordenamiento) {
         return tareaRepository.findAll(getSpecifications(prioridadId, responsableId, estadoId, proyectoId, fechaCierre, fechaRegistro, ordenamiento));
     }
 
-    //nuevo metodo
     private Specification<Tarea> getSpecifications(Long prioridadId, Long responsableId, Long estadoId, Long proyectoId, LocalDate fechaCierre, LocalDate fechaRegistro, String ordenamiento) {
         return (root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
@@ -301,7 +248,6 @@ public class TareaService implements TareaRepository {
                         query.orderBy(criteriaBuilder.asc(root.get("proyecto")));
                         break;
                     default:
-                        query.orderBy(criteriaBuilder.asc(root.get("fechaRegistro")));
                         break;
                 }
             }
