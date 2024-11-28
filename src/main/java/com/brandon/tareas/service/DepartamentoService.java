@@ -1,5 +1,6 @@
 package com.brandon.tareas.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
@@ -9,11 +10,14 @@ import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.repository.query.FluentQuery.FetchableFluentQuery;
 import org.springframework.stereotype.Service;
 
 import com.brandon.tareas.model.Departamento;
 import com.brandon.tareas.repository.DepartamentoRepository;
+
+import jakarta.persistence.criteria.Predicate;
 
 @Service
 public class DepartamentoService  implements DepartamentoRepository{
@@ -198,5 +202,78 @@ public class DepartamentoService  implements DepartamentoRepository{
         return Optional.empty();
     }
 
+    @Override
+    public Optional<Departamento> findOne(Specification<Departamento> spec) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'findOne'");
+    }
+
+    @Override
+    public List<Departamento> findAll(Specification<Departamento> spec) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'findAll'");
+    }
+
+    @Override
+    public Page<Departamento> findAll(Specification<Departamento> spec, Pageable pageable) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'findAll'");
+    }
+
+    @Override
+    public List<Departamento> findAll(Specification<Departamento> spec, Sort sort) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'findAll'");
+    }
+
+    @Override
+    public long count(Specification<Departamento> spec) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'count'");
+    }
+
+    @Override
+    public boolean exists(Specification<Departamento> spec) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'exists'");
+    }
+
+    @Override
+    public long delete(Specification<Departamento> spec) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'delete'");
+    }
+
+    @Override
+    public <S extends Departamento, R> R findBy(Specification<Departamento> spec,
+            Function<FetchableFluentQuery<S>, R> queryFunction) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'findBy'");
+    }
+
+    public List<Departamento> filtrarDepartamentos(String ordenamiento) {
+        return departamentoRepository.findAll(getSpecifications(ordenamiento));
+    }
+
+    private Specification<Departamento> getSpecifications(String ordenamiento) {
+        return (root, query, criteriaBuilder) -> {
+            List<Predicate> predicates = new ArrayList<>();
+
+            if (ordenamiento != null) {
+                switch (ordenamiento) {
+                    case "nombreAsc":
+                        query.orderBy(criteriaBuilder.asc(root.get("nombre")));
+                        break;
+                    case "nombreDesc":
+                        query.orderBy(criteriaBuilder.desc(root.get("nombre")));
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
+        };
+    }
     
 }

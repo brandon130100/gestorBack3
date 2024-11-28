@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.brandon.tareas.model.Puesto;
@@ -26,8 +27,11 @@ public class PuestoREST {
     private PuestoService puestoService;
 
     @GetMapping
-    private ResponseEntity<List<Puesto>> getAllPuestos(){
-        return ResponseEntity.ok(puestoService.findAll());
+    public ResponseEntity<List<Puesto>> filtrarPuestos(
+            @RequestParam(required = false) String ordenamiento){
+
+        List<Puesto> puestosFiltrados = puestoService.filtrarPuestos(ordenamiento);
+        return ResponseEntity.ok(puestosFiltrados);
     }
 
     @PostMapping

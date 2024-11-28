@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.brandon.tareas.model.Departamento;
@@ -26,8 +27,11 @@ public class DepartamentoREST {
     private DepartamentoService departamentoService;
 
     @GetMapping
-    private ResponseEntity<List<Departamento>> getAllDepartamentos(){
-        return ResponseEntity.ok(departamentoService.findAll());
+    public ResponseEntity<List<Departamento>> filtrarDepartamentos(
+            @RequestParam(required = false) String ordenamiento){
+
+        List<Departamento> departamentosFiltrados = departamentoService.filtrarDepartamentos(ordenamiento);
+        return ResponseEntity.ok(departamentosFiltrados);
     }
 
     @PostMapping

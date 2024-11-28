@@ -1,5 +1,6 @@
 package com.brandon.tareas.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
@@ -9,11 +10,15 @@ import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.repository.query.FluentQuery;
+import org.springframework.data.repository.query.FluentQuery.FetchableFluentQuery;
 import org.springframework.stereotype.Service;
 
 import com.brandon.tareas.model.Proyecto;
 import com.brandon.tareas.repository.ProyectoRepository;
+
+import jakarta.persistence.criteria.Predicate;
 
 @Service
 public class ProyectoService implements ProyectoRepository {
@@ -169,6 +174,80 @@ public class ProyectoService implements ProyectoRepository {
     @Override
     public <S extends Proyecto, R> R findBy(Example<S> example, Function<FluentQuery.FetchableFluentQuery<S>, R> queryFunction) {
         throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public Optional<Proyecto> findOne(Specification<Proyecto> spec) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'findOne'");
+    }
+
+    @Override
+    public List<Proyecto> findAll(Specification<Proyecto> spec) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'findAll'");
+    }
+
+    @Override
+    public Page<Proyecto> findAll(Specification<Proyecto> spec, Pageable pageable) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'findAll'");
+    }
+
+    @Override
+    public List<Proyecto> findAll(Specification<Proyecto> spec, Sort sort) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'findAll'");
+    }
+
+    @Override
+    public long count(Specification<Proyecto> spec) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'count'");
+    }
+
+    @Override
+    public boolean exists(Specification<Proyecto> spec) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'exists'");
+    }
+
+    @Override
+    public long delete(Specification<Proyecto> spec) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'delete'");
+    }
+
+    @Override
+    public <S extends Proyecto, R> R findBy(Specification<Proyecto> spec,
+            Function<FetchableFluentQuery<S>, R> queryFunction) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'findBy'");
+    }
+
+    public List<Proyecto> filtrarProyectos(String ordenamiento) {
+        return proyectoRepository.findAll(getSpecifications(ordenamiento));
+    }
+
+    private Specification<Proyecto> getSpecifications(String ordenamiento) {
+        return (root, query, criteriaBuilder) -> {
+            List<Predicate> predicates = new ArrayList<>();
+
+            if (ordenamiento != null) {
+                switch (ordenamiento) {
+                    case "nombreAsc":
+                        query.orderBy(criteriaBuilder.asc(root.get("nombre")));
+                        break;
+                    case "nombreDesc":
+                        query.orderBy(criteriaBuilder.desc(root.get("nombre")));
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
+        };
     }
 
     

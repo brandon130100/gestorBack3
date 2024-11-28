@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.brandon.tareas.model.Proyecto;
@@ -26,8 +27,11 @@ public class ProyectoREST {
     private ProyectoService proyectoService;
 
     @GetMapping
-    private ResponseEntity<List<Proyecto>> getAllProyectos(){
-        return ResponseEntity.ok(proyectoService.findAll());
+    public ResponseEntity<List<Proyecto>> filtrarProyectos(
+            @RequestParam(required = false) String ordenamiento){
+
+        List<Proyecto> proyectosFiltrados = proyectoService.filtrarProyectos(ordenamiento);
+        return ResponseEntity.ok(proyectosFiltrados);
     }
 
     @PostMapping
